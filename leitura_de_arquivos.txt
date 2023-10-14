@@ -1,0 +1,46 @@
+static int count_COM = 0;
+static int count_ES = 0;
+static int count_ln = 0;
+static int cont = 0;
+static int iterador = 0;
+static int x = 0;
+static int y = 0;
+static int value_x = 0;
+static int value_y = 0;
+static int[] prontos = {};
+static int[] bloqueados = {};
+
+while(count_ln < 21){
+    //System.out.println(count_ln);
+    //Conta o nº de comandos COM
+    if(lines.get(count_ln).equals("COM")){
+        //System.out.println("Linha COM");
+        count_COM++;
+    }
+    //Identifica uma linha que se inicia com 'X' ou 'Y'
+    else if(Character.compare(lines.get(count_ln).charAt(0), 'X') == 0){
+        //System.out.println("Linha X");
+        value_x = Integer.parseInt(lines.get(count_ln).replaceAll("[^0-9]", ""));
+        //System.out.println("value_x = "+ value_x);
+        x = value_x;
+        //System.out.println("valor de X = " + x);
+    }
+    else if(Character.compare(lines.get(count_ln).charAt(0), 'Y') == 0){
+        //System.out.println("Linha Y");
+        value_y = Integer.parseInt(lines.get(count_ln).replaceAll("[^0-9]", ""));
+        //System.out.println("value_y = " + value_y);
+        y = value_y;
+        //System.out.println("valor de Y = " + y);
+    }
+    //Identifica entradas e saídas
+    else if(lines.get(count_ln).equals("E/S")){
+        //System.out.println("Linha E/S");
+        count_ES++;
+    }
+    //Interrompe o while na última linha
+    else if(lines.get(count_ln).equals("SAIDA")){
+        //System.out.println("Linha SAIDA");
+        break;
+    }
+    count_ln++;
+}
