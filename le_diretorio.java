@@ -10,6 +10,7 @@ import java.util.*;
 public class le_diretorio{
     List<bcp> blocos = new ArrayList<>(); //lista com todos os blocos de comando de processos
     List<String> arq_quantum; //variável auxiliar para tirar o valor do quantum do arquivo
+    List<String> nome_blocos = new ArrayList<>();
     int quantum; //valor do quantum em inteiro que será usado
 
     public List<bcp> leDiretorio() {
@@ -19,6 +20,7 @@ public class le_diretorio{
         for(File file: dir_programas.listFiles()){
             try{
                 if(!file.getName().equals("quantum.txt")){
+                    nome_blocos.add(file.getName());
                     bcp bloco_ind = new bcp(leArquivo(file), file.getName()); //atribui um arquivo para um bcp individual
                     blocos.add(bloco_ind); //adiciona o bcp individual na lista blocos
                 } else {
@@ -33,9 +35,15 @@ public class le_diretorio{
                 System.exit(1);
             }
         }
-        
-        return blocos; //retorna a lista de bcps
-    }  
+
+        Collections.sort(blocos, new Comparator<bcp>() {
+           public int compare(bcp one, bcp two){
+                return Integer.compare(one.nomePrograma, two.nomePrograma);
+           } 
+        });
+
+        return blocos;
+    }
 
     //função que lê individualmente cada arquivo (é usada no construtor de cada bcp) para separar os comandos
     public static List<String> leArquivo(File arq) throws IOException{
@@ -44,17 +52,4 @@ public class le_diretorio{
 
         return lines; //retorna uma lista de strings onde cada item é uma linha do arquivo (ou um comando)
     }
-
-    //main para testes
-    //public static void main(String args[]){
-    //    System.out.println("teste");
-    //    leDiretorio();
-    //    System.out.println(blocos.size());
-    //    System.out.println(blocos);
-    //    for(int i = 0; i < blocos.size(); i++){
-    //        System.out.println(blocos.get(i).comandos);
-    //        System.out.println(blocos.get(i).estadoProcesso);
-    //    }
-    //    System.out.println(quantum);
-    //}
 }
